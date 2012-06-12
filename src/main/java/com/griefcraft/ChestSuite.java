@@ -1,14 +1,13 @@
 package com.griefcraft;
-import java.io.*;
 public class ChestSuite extends org.bukkit.plugin.java.JavaPlugin implements org.bukkit.event.Listener {
-    private java.util.Map<Integer, String> protections = new java.util.HashMap<Integer, String>();
-    private File dbfile = new File("plugins/ChestSuite/chestsuite.db");
+    private java.util.Map<Integer /* Hashcode of Location */, String> protections = new java.util.HashMap<Integer, String>();
+    private java.io.File dbfile = new java.io.File("plugins/ChestSuite/chestsuite.db");
     @Override public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
         getDataFolder().mkdir();
         try {
             if (dbfile.exists()) {
-                ObjectInputStream is = new ObjectInputStream(new FileInputStream(dbfile));
+                java.io.ObjectInputStream is = new java.io.ObjectInputStream(new java.io.FileInputStream(dbfile));
                 protections = (java.util.Map<Integer, String>) is.readObject();
                 is.close();
             } else dbfile.createNewFile();
@@ -16,7 +15,7 @@ public class ChestSuite extends org.bukkit.plugin.java.JavaPlugin implements org
     }
     @Override public void onDisable() {
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(dbfile));
+            java.io.ObjectOutputStream os = new java.io.ObjectOutputStream(new java.io.FileOutputStream(dbfile));
             os.writeObject(protections);
             os.close();
         } catch (Exception e) { e.printStackTrace(); }
